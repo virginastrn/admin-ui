@@ -1,31 +1,24 @@
-import React, { useState, useEffect } from "react";
-import UserCard from "./UserCard";
-import { getUsers } from "./Services";
+import React from "react"; 
+import { postsData } from "./postsData"; 
+import PostCard from "./PostCard"; 
 
 function Exercise() {
-  // 1. Inisialisasi state untuk menampung data user
-  const [users, setUsers] = useState([]);
-
-  // 2. Gunakan useEffect untuk mengambil data saat halaman pertama kali dibuka
-  useEffect(() => {
-    getUsers()
-      .then((data) => {
-        // 3. Simpan data hasil fetch ke dalam state
-        setUsers(data);
-      })
-      .catch((error) => {
-        console.log("[Component] Gagal menampilkan data", error.message);
-      });
-  }, []);
-
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold text-center mb-6 text-blue-700">
-        User Cards
+      {/* Soal 01: Menggunakan warna kustom [cite: 33] */}
+      <h1 className="text-3xl font-bold text-center mb-10 text-special-red2">
+        Post Cards
       </h1>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {users.map((user) => (
-          <UserCard key={user.email} {...user} />
+      
+      {/* Soal 03: Container Grid sesuai gambar soal [cite: 74, 76] */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        {postsData.map((post) => (
+          <PostCard 
+            key={post.id} 
+            id={post.id} 
+            title={post.title} 
+            body={post.body} 
+          />
         ))}
       </div>
     </div>
