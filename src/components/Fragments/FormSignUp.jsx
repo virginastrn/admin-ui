@@ -88,6 +88,14 @@ function FormSignUp() {
         </Button>
       </div>
       {/* sign up with google end */}
+      {/* link start */}
+      <div className="text-center">
+        <span className="text-gray-400 text-sm">Already have an account? </span>
+        <Link to="/login" className="text-primary text-sm font-bold">
+          Sign In Here
+        </Link>
+      </div>
+      {/* link end */}
     </>
   );
 }
