@@ -1,18 +1,27 @@
+import { BarChart } from '@mui/x-charts/BarChart';
+import * as React from "react";
+import { ThemeContext } from "../../context/ThemeContext";
+
+const chartSetting = {
+  height: 300,
+};
+
 export default function BarsDataset(props) {
   const { data } = props;
+  const { theme } = React.useContext(ThemeContext);
+
   console.log("BarsDataset data:", data); // tambah ini
 
-  if (!data || !Array.isArray(data)) {
-    return <div>Data tidak valid</div>;
-  }
+  const chartData = Array.isArray(data) ? data : data?.data;
+
+  if (!chartData || !Array.isArray(chartData)) return <div>Loading...</div>;
 
   return (
     <BarChart
-      dataset={data}
-      xAxis={[{ dataKey: 'date', scaleType: 'band', categoryGapratio: 0.5 }]}
+      xAxis={[{ scaleType: 'band', data: chartData.map(d => d.date) }]}
       series={[
-        { dataKey: 'amountThisWeek', label: 'This Week' },
-        { dataKey: 'amountLastWeek', label: 'Last Week' },
+        { data: chartData.map(d => d.amountThisWeek), label: 'This Week', color: theme.color },
+        { data: chartData.map(d => d.amountLastWeek), label: 'Last Week' },
       ]}
       {...chartSetting}
     />

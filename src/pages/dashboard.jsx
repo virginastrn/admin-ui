@@ -6,11 +6,9 @@ import CardUpcomingBill from "../components/Fragments/CardUpcomingBill";
 import CardRecentTransactions from "../components/Fragments/CardRecentTransactions";
 import CardStatistics from "../components/Fragments/CardStatistics";
 import CardExpensesBreakdown from "../components/Fragments/CardExpensesBreakdown";
-import { transactions, bills, expensesBreakdowns, balances, goals, expensesStatistics } from "../data";
+import { transactions, bills, expensesBreakdowns, balances, goals, expensesStatistics } from "../data/index.jsx";
 
 function dashboard() {
-  console.log(transactions);
-
   return (
     <>
       <MainLayout>
@@ -28,7 +26,7 @@ function dashboard() {
             <CardRecentTransactions data={transactions} />
           </div>
           <div className="sm:col-span-8">
-            <CardStatistics data={expensesStatistics}   />
+            <CardStatistics data={expensesStatistics} /> {/* hapus s */}
           </div>
           <div className="sm:col-span-8">
             <CardExpensesBreakdown data={expensesBreakdowns} />
