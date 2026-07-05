@@ -1,12 +1,23 @@
+import { useState } from "react";
 import LabeledInput from "../Elements/LabeledInput";
 import Button from "../Elements/Button";
+import { Link } from "react-router-dom";
 
-function FormSignUp() {
+function FormSignUp({ onSubmit }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(name, email, password);
+  };
+
   return (
     <>
       {/* form start */}
       <div className="mt-16">
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <LabeledInput
               label="Name"
@@ -14,6 +25,8 @@ function FormSignUp() {
               type="text"
               placeholder="Tanzir Rahman"
               name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="mb-6">
@@ -23,6 +36,8 @@ function FormSignUp() {
               type="email"
               placeholder="hello@example.com"
               name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-6">
@@ -32,9 +47,11 @@ function FormSignUp() {
               type="password"
               placeholder="••••••••"
               name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          
+
           {/* Terms of Service Text */}
           <div className="mb-3 text-xs text-gray-400">
             By continuing, you agree to our{" "}

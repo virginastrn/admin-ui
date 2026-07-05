@@ -5,6 +5,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Icon from "../Elements/Icon";
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
+import { AuthContext } from "../../context/authContext";
 
 function MainLayout(props) {
   const { children } = props;
@@ -18,6 +19,8 @@ function MainLayout(props) {
   ];
 
   const { theme, setTheme } = useContext(ThemeContext);
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   const menu = [
     { id: 1, name: "Overview", icon: <Icon.Overview />, link: "/" },
@@ -70,7 +73,7 @@ function MainLayout(props) {
               ))}
             </div>
           </div>
-          
+
           <div>
              <NavLink to="/login">
              <div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md">
@@ -84,9 +87,8 @@ function MainLayout(props) {
             <div className="flex justify-between items-center">
               <div>Avatar</div>
               <div className="hidden sm:block">
-                Username
-                <br />
-                View Profile
+                <div>{user.name}</div>
+                <div>View Profile</div>
               </div>
               <div className="hidden sm:block">
                 <Icon.Detail size={15} />
@@ -99,7 +101,7 @@ function MainLayout(props) {
         <div className="bg-special-mainBg flex-1 flex flex-col">
           <div className="border border-b border-gray-05 px-6 py-7 flex justify-between">
             <div className="flex items-center">
-              <div className="font-bold text-2xl me-6">Username</div>
+              <div className="font-bold text-2xl me-6">{user.name}</div>
               <div className="text-gray-03 flex">
                 <Icon.ChevronRight size={20} />
                 <span>May 19, 2023</span>

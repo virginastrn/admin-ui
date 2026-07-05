@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MainLayout from '../components/Layouts/MainLayout';
 import CardBalance from "../components/Fragments/CardBalance"; 
 import CardGoal from "../components/Fragments/CardGoal";
@@ -7,8 +7,31 @@ import CardRecentTransactions from "../components/Fragments/CardRecentTransactio
 import CardStatistics from "../components/Fragments/CardStatistics";
 import CardExpensesBreakdown from "../components/Fragments/CardExpensesBreakdown";
 import { transactions, bills, expensesBreakdowns, balances, goals, expensesStatistics } from "../data/index.jsx";
+import { goalService } from "../services/dataService";
+import { AuthContext } from "../context/authContext";
 
 function dashboard() {
+  const [goals, setGoals] = useState({});
+
+  const fetchGoals = async () => {
+    try {
+      const data = await goalService();
+      setGoals(data);
+    } catch (err) {
+      console.error("Gagal mengambil data goals:", err);
+      if (err.status === 401) {
+        logout();
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchGoals();
+  }, []);
+
+  console.log(goals);
+
+
   return (
     <>
       <MainLayout>
