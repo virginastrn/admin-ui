@@ -7,6 +7,7 @@ import {
 import * as React from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 
+
 function GaugePointer({ color }) {  // tambahkan { color } di sini
   const { valueAngle, outerRadius, cx, cy } = useGaugeState();
 
