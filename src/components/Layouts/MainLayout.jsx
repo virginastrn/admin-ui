@@ -103,7 +103,7 @@ function MainLayout(props) {
 
         {/* Main Content */}
         <div className="bg-special-mainBg flex-1 flex flex-col">
-          <div className="border border-b border-gray-05 px-6 py-7 flex justify-between">
+          <header className="border border-b border-gray-05 px-6 py-7 flex justify-between">
             <div className="flex items-center">
               <div className="font-bold text-2xl me-6">{user.name}</div>
               <div className="text-gray-03 flex">
@@ -117,7 +117,7 @@ function MainLayout(props) {
               </div>
               <Input backgroundColor="bg-white" border="border-white" />
             </div>
-          </div>
+          </header>
           <main className="flex-1 px-6 py-4">{children}</main>
         </div>
       </div>
