@@ -24,6 +24,26 @@ export const registerService = async (name, email, password) => {
 
     return response.data;
   } catch (error) {
-    throw error.response?.data || { msg: "Registrasi gagal" };
+    throw error.response?.data || { msg: "Login gagal" };
+  }
+};
+
+export const logoutService = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    await axios.post(`${API_URL}/logout`, 
+     {},
+	   {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }, 
+     }
+    );
+  } catch (error) {
+    throw {
+      status: error.response?.status,
+      msg: error.response?.data?.msg,
+    };
   }
 };

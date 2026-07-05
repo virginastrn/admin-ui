@@ -19,7 +19,7 @@ function MainLayout(props) {
   ];
 
   const { theme, setTheme } = useContext(ThemeContext);
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   console.log(user);
 
   const menu = [
@@ -31,6 +31,10 @@ function MainLayout(props) {
     { id: 6, name: "Goals", icon: <Icon.Goal />, link: "/goal" },
     { id: 7, name: "Settings", icon: <Icon.Setting />, link: "/setting" },
   ];
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <>
@@ -75,14 +79,14 @@ function MainLayout(props) {
           </div>
 
           <div>
-             <NavLink to="/login">
+             <div onClick={handleLogout} className="cursor-pointer">
              <div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md">
               <div className="mx-auto sm:mx-0 text-primary">
                 <Icon.Logout />
               </div>
               <div className="ms-3 hidden sm:block">Logout</div>
             </div>
-            </NavLink>
+            </div>
             <div className="border my-10 border-b-special-bg"></div>
             <div className="flex justify-between items-center">
               <div>Avatar</div>
