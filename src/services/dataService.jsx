@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_URL = "https://jwt-auth-eight-neon.vercel.app";
 
+// GOAL SERVICE
 export const goalService = async () => {
   try {
     const token = localStorage.getItem("token");
@@ -9,9 +10,33 @@ export const goalService = async () => {
     const response = await axios.get(`${API_URL}/goals`, {
       headers: {
         Authorization: `Bearer ${token}`,
-      }, 
+      },
     });
-    return response.data.data[0];
+
+    return response.data;
+  } catch (error) {
+    throw {
+      status: error.response?.status,
+      msg: error.response?.data?.msg,
+    };
+  }
+};
+
+// EXPENSE SERVICE
+export const expenseService = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const response = await axios.get(`${API_URL}/expenses`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("FULL RESPONSE :", response.data);
+
+    // response.data sudah berupa array
+    return response.data;
   } catch (error) {
     throw {
       status: error.response?.status,
