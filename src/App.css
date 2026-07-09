@@ -45,3 +45,29 @@ html {
 .theme-brown {
   --color-primary: #8b4513;
 }
+
+.dark {
+  --color-special-mainBg: #14161a;
+  --color-gray-06: #1f2126;
+  --color-gray-05: #2b2d33;
+  --color-gray-03: #9a9a9a;
+  --color-gray-02: #b5b5b5;
+  --color-gray-01: #d6d6d6;
+  --color-secondary: #cfcfcf;
+  color: #e5e5e5;
+}
+
+.dark .bg-white {
+  background-color: #1f2126;
+  color: #e5e5e5;
+}
+
+.dark .text-black {
+  color: #f4f5f7;
+}
+
+.dark input {
+  background-color: #1f2126;
+  color: #e5e5e5;
+  border-color: #2b2d33;
+}
