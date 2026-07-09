@@ -13,15 +13,20 @@ export const goalService = async () => {
       },
     });
 
+    console.log("===== GOAL RESPONSE =====");
+    console.log(response.data);
+
     return response.data;
+
   } catch (error) {
+    console.log(error.response);
+
     throw {
       status: error.response?.status,
       msg: error.response?.data?.msg,
     };
   }
 };
-
 // EXPENSE SERVICE
 export const expenseService = async () => {
   try {
@@ -37,6 +42,22 @@ export const expenseService = async () => {
 
     // response.data sudah berupa array
     return response.data;
+  } catch (error) {
+    throw {
+      status: error.response?.status,
+      msg: error.response?.data?.msg,
+    };
+  }
+};
+
+// BILL SERVICE
+export const billService = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${API_URL}/bills`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
   } catch (error) {
     throw {
       status: error.response?.status,

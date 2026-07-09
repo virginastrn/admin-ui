@@ -6,7 +6,14 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 function CardGoal(props) {
   const { data } = props;
-  const chartValue = (data.present_amount / data.target_amount) * 100;
+
+  const chartValue =
+    data.target_amount > 0
+      ? (data.present_amount / data.target_amount) * 100
+      : 0;
+
+  console.log("GOAL DATA:", data);
+  console.log("CHART VALUE:", chartValue);
 
   const chartData = (
     <div className="p-2">

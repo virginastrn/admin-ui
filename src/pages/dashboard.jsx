@@ -1,51 +1,102 @@
-import React from "react";
-import MainLayout from "../components/Layouts/MainLayout";
+import React, { useContext, useEffect, useState } from 'react';
+import MainLayout from '../components/Layouts/MainLayout';
 import CardBalance from "../components/Fragments/CardBalance";
 import CardGoal from "../components/Fragments/CardGoal";
 import CardUpcomingBill from "../components/Fragments/CardUpcomingBill";
 import CardRecentTransactions from "../components/Fragments/CardRecentTransactions";
 import CardStatistics from "../components/Fragments/CardStatistics";
 import CardExpensesBreakdown from "../components/Fragments/CardExpensesBreakdown";
+import { transactions, expensesBreakdowns, balances, expensesStatistics } from "../data/index.jsx";
+import { goalService, billService } from "../services/dataService";
+import { AuthContext } from "../context/authContext";
+import AppSnackbar from "../components/Elements/AppSnackbar";
 
-import {
-  transactions,
-  bills,
-  expensesBreakdowns,
-  balances,
-  goals,
-  expensesStatistics,
-} from "../data/index.jsx";
+function dashboard() {
+  const [goals, setGoals] = useState({});
+  const [bills, setBills] = useState([]);
+  const { logout } = useContext(AuthContext);
 
-function Dashboard() {
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
+  const fetchGoals = async () => {
+    try {
+      const data = await goalService();
+      setGoals(data);
+    } catch (err) {
+      setSnackbar({
+        open: true,
+        message: "Gagal mengambil data goals",
+        severity: "error",
+      });
+      if (err.status === 401) {
+        logout();
+      }
+    }
+  };
+
+  const fetchBills = async () => {
+    try {
+      const data = await billService();
+      console.log("Bills data:", data);
+      setBills(data);
+    } catch (err) {
+      setSnackbar({
+        open: true,
+        message: "Gagal mengambil data bills",
+        severity: "error",
+      });
+      if (err.status === 401) {
+        logout();
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchGoals();
+    fetchBills();
+  }, []);
+
   return (
-    <MainLayout>
-      <div className="grid sm:grid-cols-12 gap-6">
-        <div className="sm:col-span-4">
-          <CardBalance data={balances} />
+    <>
+      <MainLayout>
+        <div className="grid sm:grid-cols-12 gap-6">
+          <div className="sm:col-span-4">
+            <CardBalance data={balances} />
+          </div>
+          <div className="sm:col-span-4">
+            <CardGoal data={goals} />
+          </div>
+          <div className="sm:col-span-4">
+            <CardUpcomingBill data={bills} />
+          </div>
+          <div className="sm:col-span-4 sm:row-span-2">
+            <CardRecentTransactions data={transactions} />
+          </div>
+          <div className="sm:col-span-8">
+            <CardStatistics data={expensesStatistics} />
+          </div>
+          <div className="sm:col-span-8">
+            <CardExpensesBreakdown data={expensesBreakdowns} />
+          </div>
         </div>
 
-        <div className="sm:col-span-4">
-          <CardGoal data={goals} />
-        </div>
-
-        <div className="sm:col-span-4">
-          <CardUpcomingBill data={bills} />
-        </div>
-
-        <div className="sm:col-span-4 sm:row-span-2">
-          <CardRecentTransactions data={transactions} />
-        </div>
-
-        <div className="sm:col-span-8">
-          <CardStatistics data={expensesStatistics} />
-        </div>
-
-        <div className="sm:col-span-8">
-          <CardExpensesBreakdown data={expensesBreakdowns} />
-        </div>
-      </div>
-    </MainLayout>
+        <AppSnackbar
+          open={snackbar.open}
+          message={snackbar.message}
+          severity={snackbar.severity}
+          onClose={handleCloseSnackbar}
+        />
+      </MainLayout>
+    </>
   );
 }
 
-export default Dashboard;
+export default dashboard;
