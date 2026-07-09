@@ -6,6 +6,8 @@ import Icon from "../Elements/Icon";
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
 import { AuthContext } from "../../context/authContext";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function MainLayout(props) {
   const { children } = props;
@@ -32,9 +34,14 @@ function MainLayout(props) {
     { id: 7, name: "Settings", icon: <Icon.Setting />, link: "/setting" },
   ];
 
+  const [loggingOut, setLoggingOut] = useState(false);
+
   const handleLogout = () => {
+  setLoggingOut(true);
+  setTimeout(() => {
     logout();
-  };
+  }, 1500);
+};
 
   return (
     <>
@@ -121,6 +128,12 @@ function MainLayout(props) {
           <main className="flex-1 px-6 py-4">{children}</main>
         </div>
       </div>
+  <Backdrop
+  sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+  open={loggingOut}
+>
+  <CircularProgress color="inherit" />
+</Backdrop>
     </>
   );
 }
